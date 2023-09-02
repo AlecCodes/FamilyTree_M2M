@@ -29,6 +29,21 @@ public class Person {
     )
     private ArrayList<Person> parents = new ArrayList<>();
 
+    /////////////////////
+    //Constructor
+    /////////////////////
+    public Person(){}
+    //Is this a valid arraylist param?
+    public Person(String name, Date birthday, ArrayList<Person> parents){
+        this.name = name;
+        this.birthday = birthday;
+        this.parents = parents;
+    }
+
+    /////////////////////
+    //GETTERS N SETTERS
+    /////////////////////
+
     public long getId() {
         return id;
     }
