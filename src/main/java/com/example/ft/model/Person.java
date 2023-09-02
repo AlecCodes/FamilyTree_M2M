@@ -29,5 +29,35 @@ public class Person {
     )
     private ArrayList<Person> parents = new ArrayList<>();
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public ArrayList<Person> getParents() {
+        return parents;
+    }
+
+    public void setParents(ArrayList<Person> parents) {
+        this.parents = parents;
+    }
 }
