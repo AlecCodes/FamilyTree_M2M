@@ -3,6 +3,7 @@ package com.example.ft.model;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -27,7 +28,7 @@ public class Person {
             joinColumns = @JoinColumn(name="child_id"),
             inverseJoinColumns = @JoinColumn(name = "parent_id")
     )
-    private ArrayList<Person> parents = new ArrayList<>();
+    private List<Person> parents = new ArrayList<>();
 
     /////////////////////
     //Constructor
@@ -68,11 +69,11 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public ArrayList<Person> getParents() {
+    public List<Person> getParents() {
         return parents;
     }
 
-    public void setParents(ArrayList<Person> parents) {
+    public void setParents(List<Person> parents) {
         this.parents = parents;
     }
 }
