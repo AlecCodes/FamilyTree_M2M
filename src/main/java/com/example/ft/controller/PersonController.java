@@ -26,12 +26,24 @@ public class PersonController {
     @GetMapping("/")
     public List<Person> getPeople() {return personRepository.findAll();}
 
-    //Use a DTO instead of entity type?
+
+    //Is this really how I want to handle the request?
     @PostMapping("/")
     public ResponseEntity<String> postRoute(@RequestBody CreatePersonRequest request){
         try{
             List<Long> parentIds = request.getParentIds();
-            List<Person> parents = new ArrayList<>();
+            ArrayList<Person> parents = new ArrayList<>();
+
+            for (Long parentId : parentIds){
+                Optional<Person> _parent = personRepository.findById(parentId);
+                if (_parent.isPresent()) {
+                    //Get method of optional, not entity
+                    parents.add(_parent.get());
+                }else{
+                    return ResponseEntity.badRequest().body("Parent with ID " + parentId + " not found");
+                }
+            }
+            personRepository.save(new Person(request.getName(), request.getBirthday(), parents));
             return ResponseEntity.ok("good request");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error Creating Person.");

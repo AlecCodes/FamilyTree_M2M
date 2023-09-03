@@ -2,6 +2,7 @@ package com.example.ft.DTO;
 
 import java.util.Date;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 public class CreatePersonRequest {
@@ -17,6 +18,7 @@ public class CreatePersonRequest {
         this.name = name;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public Date getBirthday() {
         return birthday;
     }
