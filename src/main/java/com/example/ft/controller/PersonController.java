@@ -26,6 +26,13 @@ public class PersonController {
     @GetMapping("/")
     public List<Person> getPeople() {return personRepository.findAll();}
 
+    @GetMapping("/{id}")
+    public Optional<Person> getPerson(@PathVariable long id){
+         Person _person = personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with id: "+ id));
+         return Optional.of(_person);
+    }
+
 
     //Is this really how I want to handle the request?
     @PostMapping("/")
@@ -33,7 +40,10 @@ public class PersonController {
         Person _person = personRepository.save(new Person(request.getName(), request.getBirthday(), new ArrayList<Person>()));
         return Optional.of(_person);
     }
+
+
     //Perhaps the parentid column in our db is causing issues. Is it being used?
+    //
 
 //    public ResponseEntity<String> postRoute(@RequestBody CreatePersonRequest request){
 //        try{
