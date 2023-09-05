@@ -41,6 +41,16 @@ public class PersonController {
         return Optional.of(_person);
     }
 
+    @PostMapping("/{personId}/{parentId}")
+    public Optional<Person> addParent(@PathVariable long personId, @PathVariable long parentId) {
+        Person _parent = personRepository.findById(parentId)
+                .orElseThrow(() -> new RuntimeException("Couldn't find parent with id: " + parentId));
+        //Get the parents array, then add parent
+        Person _person = personRepository.findById(personId)
+                .orElseThrow(() -> new RuntimeException("Couldn't find person with id: " + personId));
+        _person.getParents().add(_parent);
+        return Optional.of(_person);
+    }
 
     //Perhaps the parentid column in our db is causing issues. Is it being used?
     //
