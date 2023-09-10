@@ -52,6 +52,17 @@ public class PersonController {
         return Optional.of(_person);
     }
 
+    @PutMapping("/{personId}")
+    public Optional<Person> editPerson(@PathVariable long personId, @RequestBody Person request){
+        Person _person = personRepository.findById(personId)
+                .orElseThrow(() -> new RuntimeException("Couldn't find person w id: " + personId));
+        _person.setBirthday(request.getBirthday());
+        _person.setName(request.getName());
+        return Optional.of(personRepository.save(_person));
+    }
+
+
+
     //Perhaps the parentid column in our db is causing issues. Is it being used?
     //
 
