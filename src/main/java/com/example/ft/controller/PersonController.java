@@ -61,6 +61,14 @@ public class PersonController {
         return Optional.of(personRepository.save(_person));
     }
 
+    @DeleteMapping("/{personId}")
+    public Optional<Person> deletePerson(@PathVariable long personId){
+        Person _person = personRepository.findById(personId)
+                .orElseThrow(() -> new RuntimeException("Couldnt find person w id" + personId));
+        personRepository.deleteById(personId);
+        return Optional.of(_person);
+    }
+
 
 
     //Perhaps the parentid column in our db is causing issues. Is it being used?

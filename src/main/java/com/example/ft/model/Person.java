@@ -22,7 +22,8 @@ public class Person {
     @Column(name = "birthday")
     private Date birthday;
 
-    @ManyToMany
+    //An Eager fetch type will fetch the parent collection during the hibernate session.
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "person_parent",
             joinColumns = @JoinColumn(name="child_id"),
