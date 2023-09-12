@@ -49,7 +49,7 @@ public class PersonController {
         Person _person = personRepository.findById(personId)
                 .orElseThrow(() -> new RuntimeException("Couldn't find person with id: " + personId));
         _person.getParents().add(_parent);
-        return Optional.of(_person);
+        return Optional.of(personRepository.save(_person));
     }
 
     @PutMapping("/{personId}")
@@ -66,6 +66,12 @@ public class PersonController {
         Person _person = personRepository.findById(personId)
                 .orElseThrow(() -> new RuntimeException("Couldnt find person w id" + personId));
         personRepository.deleteById(personId);
+        return Optional.of(_person);
+    }
+    @DeleteMapping("/{personId}/{parentId}")
+    public Optional<Person> deleteParent(@PathVariable long personId, @PathVariable long parentId){
+        Person _person = personRepository.findById(personId)
+                .orElseThrow(() -> new RuntimeException("Couldnt find parent w id "+parentId));
         return Optional.of(_person);
     }
 
