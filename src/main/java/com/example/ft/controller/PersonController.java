@@ -61,6 +61,20 @@ public class PersonController {
         return Optional.of(personRepository.save(_person));
     }
 
+    @DeleteMapping("/{personId}/{parentId}")
+    public Optional<Person> deleteParent(@PathVariable long personId, @PathVariable long parentId){
+        Person _person = personRepository.findById(personId)
+                .orElseThrow(() -> new RuntimeException("Couldnt find person w id "+personId));
+
+        for (int i = 0; i < _person.getParents().size(); i++ ){
+            Person _parent = _person.getParents().get(i);
+//            System.out.println(_parent);
+            if (parentId == _parent.getId()){
+                _person.getParents().remove(i);
+            }
+        }
+        return Optional.of(personRepository.save(_person));
+    }
     @DeleteMapping("/{personId}")
     public Optional<Person> deletePerson(@PathVariable long personId){
         Person _person = personRepository.findById(personId)
@@ -68,13 +82,6 @@ public class PersonController {
         personRepository.deleteById(personId);
         return Optional.of(_person);
     }
-    @DeleteMapping("/{personId}/{parentId}")
-    public Optional<Person> deleteParent(@PathVariable long personId, @PathVariable long parentId){
-        Person _person = personRepository.findById(personId)
-                .orElseThrow(() -> new RuntimeException("Couldnt find parent w id "+parentId));
-        return Optional.of(_person);
-    }
-
 
 
     //Perhaps the parentid column in our db is causing issues. Is it being used?
