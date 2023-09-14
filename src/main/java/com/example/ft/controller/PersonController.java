@@ -26,6 +26,14 @@ public class PersonController {
     @GetMapping("/")
     public List<Person> getPeople() {return personRepository.findAll();}
 
+
+    @GetMapping("/seeChildren/{id}")
+    public List<Person> getChildren(@PathVariable long id){
+        Person _person = personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with id: "+id));
+        return personRepository.findChildrenByPersonId(_person.getId());
+    }
+
     @GetMapping("/{id}")
     public Optional<Person> getPerson(@PathVariable long id){
          Person _person = personRepository.findById(id)
